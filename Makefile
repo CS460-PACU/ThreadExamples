@@ -7,22 +7,29 @@
 # Purpose:    
 #############################################################################
 
-all: bin bin/main
+TARGETS=bin/OneThread bin/TwoThreads_Sync bin/CondWaitThread bin/TwoThreads_NoSharedData bin/TwoThreads_WithSharedData
+
+all: ${TARGETS}
 
 bin:
 	mkdir -p bin
 
-bin/main: bin bin/main.o
-	gcc -o bin/main -g -Wall bin/main.o
+bin/OneThread: bin src/OneThread.c
+	gcc -o bin/OneThread -pthread src/OneThread.c -g -Wall
 
-bin/main.o: src/main.c
-	gcc -c -o bin/main.o -g -Wall src/main.c
+bin/TwoThreads_Sync: bin src/TwoThreads_Sync.c
+	gcc -o bin/TwoThreads_Sync -pthread src/TwoThreads_Sync.c -g -Wall
+	
 
-valgrind: bin/main
-	valgrind -v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all bin/main
+bin/TwoThreads_NoSharedData: bin src/TwoThreads_NoSharedData.c
+	gcc -o bin/TwoThreads_NoSharedData -pthread src/TwoThreads_NoSharedData.c -g -Wall
 
-printMain:
-	enscript -C -T 2 -p - -M Letter -Ec --color -fCourier8 src/main.c  | ps2pdf - bin/main.pdf
+bin/TwoThreads_WithSharedData: bin src/TwoThreads_WithSharedData.c
+	gcc -o bin/TwoThreads_WithSharedData -pthread src/TwoThreads_WithSharedData.c -g -Wall
+
+
+bin/CondWaitThread: src/CondWaitThread.c
+	gcc -o bin/CondWaitThread -pthread src/CondWaitThread.c -g -Wall
 
 clean:
-	rm -f bin/main bin/*.o
+	rm -f ${TARGETS} bin/*
