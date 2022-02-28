@@ -194,7 +194,7 @@ void *runnerNoWait(void *pParam)
 	
 	ThreadArgs *psThreadArg = (ThreadArgs*) pParam;
 
-	int localSeed = (int) time(NULL);
+	unsigned int localSeed = (unsigned int) time(NULL);
 	
 	
 	int tid = syscall(SYS_gettid);
@@ -251,7 +251,7 @@ void *runner(void *pParam)
 {
 	ThreadArgs *psThreadArg = (ThreadArgs*) pParam;
 	
-	int localSeed = (int) time(NULL);
+	unsigned int localSeed = (unsigned int) time(NULL);
 	
 	int tid = syscall(SYS_gettid);
 

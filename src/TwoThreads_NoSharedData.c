@@ -13,10 +13,6 @@
 #include <sys/types.h>
 
 
-
-int gSum; /* this data is shared by the thread(s) */
-
-
 /**
  * The thread will begin control 
  * in the function runner()
@@ -41,7 +37,7 @@ void *runner(void *param)
   syscall(SYS_gettid),
 	*(int*) param);
 
-  pthread_exit((void*) &gSum);
+  pthread_exit(NULL);
 }
 
 /****************************************************************************
@@ -57,11 +53,9 @@ int main(int argc, char *argv[])
 {
   pthread_t tid[2]; /* the thread identifier */
   pthread_attr_t attr[2]; /* set of attributes for the thread */
-  int *pResult;
   int value = 9;
 
 /* adapted from page 133 of Silberschatz */
-  gSum = 0;
 
   /* get the default attributes */
   pthread_attr_init(&attr[0]);
@@ -72,10 +66,10 @@ int main(int argc, char *argv[])
   pthread_create(&tid[1],&attr[1],runner, &value);
 
   /* now wait for the thread to exit */
-  pthread_join(tid[0], (void**) &pResult); // why a handle?
-  pthread_join(tid[1], (void**) &pResult); // why a handle?
+  pthread_join(tid[0], NULL); 
+  pthread_join(tid[1], NULL); 
 
-  printf("sum = %d OR %d\n",gSum, *pResult);
+  printf("\nDone\n");
 }
 /* adapted from page 133 of Silberschatz */
 

@@ -73,8 +73,8 @@ int main(int argc, char *argv[])
   pthread_create(&tid[1],&attr[1],runner, &value);
 
   /* now wait for the thread to exit */
-  pthread_join(tid[0],  &pResult); // why a handle?
-  pthread_join(tid[1],  &pResult); // why a handle?
+  pthread_join(tid[0], (void**) &pResult); // why a handle?
+  pthread_join(tid[1], (void**) &pResult); // why a handle?
 
   printf("sum = %d OR %d\n",gSum, *pResult);
 }
