@@ -6,8 +6,8 @@
 // Assignment:	Thread examples
 // Purpose:			Example of starting two threads, cond wait, signal,
 //							and synchronization
-// 							link with -lpthread
-//							gcc -o app -g app.o -lpthread 
+// 							compile and link with -pthread
+//							gcc -o app -g app.o -pthread 
 //***************************************************************************
 
 #include <pthread.h>
