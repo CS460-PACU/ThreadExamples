@@ -7,7 +7,7 @@
 # Purpose:    
 #############################################################################
 
-TARGETS=bin/OneThread bin/TwoThreads_Sync bin/CondWaitThread bin/TwoThreads_NoSharedData bin/TwoThreads_WithSharedData
+TARGETS=bin/OneThread bin/TwoThreads_Sync_ParamRace bin/TwoThreads_Sync bin/CondWaitThread bin/TwoThreads_NoSharedData bin/TwoThreads_WithSharedData
 
 all: ${TARGETS}
 
@@ -20,6 +20,9 @@ bin/OneThread: bin src/OneThread.c
 bin/TwoThreads_Sync: bin src/TwoThreads_Sync.c
 	gcc -o bin/TwoThreads_Sync -pthread src/TwoThreads_Sync.c -g -Wall
 	
+bin/TwoThreads_Sync_ParamRace: bin src/TwoThreads_Sync_ParamRace.c
+	gcc -o bin/TwoThreads_Sync_ParamRace -pthread src/TwoThreads_Sync_ParamRace.c -g -Wall -std=c99 
+
 
 bin/TwoThreads_NoSharedData: bin src/TwoThreads_NoSharedData.c
 	gcc -o bin/TwoThreads_NoSharedData -pthread src/TwoThreads_NoSharedData.c -g -Wall

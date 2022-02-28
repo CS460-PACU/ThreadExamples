@@ -59,7 +59,8 @@ int main(int argc, char *argv[])
   pthread_t tid[2]; /* the thread identifier */
   pthread_attr_t attr[2]; /* set of attributes for the thread */
   int *pResult;
-  int value = 9;
+  int valueT1 = 9;
+  int valueT2 = 100;
 
 /* adapted from page 133 of Silberschatz */
   gSum = 0;
@@ -69,8 +70,8 @@ int main(int argc, char *argv[])
   pthread_attr_init(&attr[1]);
 
   /* create the thread */
-  pthread_create(&tid[0],&attr[0],runner, &value);
-  pthread_create(&tid[1],&attr[1],runner, &value);
+  pthread_create(&tid[0],&attr[0],runner, &valueT1);
+  pthread_create(&tid[1],&attr[1],runner, &valueT2);
 
   /* now wait for the thread to exit */
   pthread_join(tid[0], (void**) &pResult); // why a handle?
