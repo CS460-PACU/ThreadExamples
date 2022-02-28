@@ -89,9 +89,7 @@ int main(int argc, char **argv)
 ****************************************************************************/
 void *runner(void *pParam) 
 {
-	int i;
-	int localSum = 0;
-
+	
   printf("%d : %ld : %d\n", 
 	  getpid(),
 	  //gettid(),
@@ -100,16 +98,5 @@ void *runner(void *pParam)
     syscall(SYS_gettid),
 	  *(int*) pParam);
 
-	for (i = 1; i <= *(int*) pParam; i++)
-	{
-		localSum += i;
-	}
-
-	// lock the mutex before you update shared data!
-	pthread_mutex_lock (&gsMutex);
-	gSum += localSum;
-	pthread_mutex_unlock (&gsMutex);
-	// unlock the mutex so the other threads can run!
-	
 	pthread_exit (NULL);
 }
