@@ -19,10 +19,6 @@
 #include <time.h>
 
 
-// global data shared by all threads
-int gSum = 0;
-pthread_mutex_t gsMutex;
-
 // the function to run in the thread
 void *runner(void *pParam);
 
@@ -42,8 +38,6 @@ int main(int argc, char **argv)
   
 	int value = 5;
 	
-	
-	pthread_mutex_init (&gsMutex, NULL); // initialize the mutex
 	
 	pthread_attr_init (&sAttr);					// get default thread attributes
 	
@@ -68,11 +62,10 @@ int main(int argc, char **argv)
 	pthread_join (tid2, NULL);
 	
 	// cleanup data
-	pthread_mutex_destroy (&gsMutex);
 	pthread_attr_destroy (&sAttr);
 		
 	// no other threads are active, so no mutex is necessary
-	printf("sum = %d\n",gSum);
+	printf("\nDone\n");
 	
 	return 0;
 }
