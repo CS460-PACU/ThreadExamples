@@ -35,12 +35,11 @@ void *runner(void *pParam);
  
  Returned:		0 for success, 1 for failure
 ****************************************************************************/
-int main()
+int main(int argc, char **argv)
 {
 	pthread_t tid1, tid2; 	// thread ids
 	pthread_attr_t sAttr; 		// thread attributes
-  unsigned int localSeed = (unsigned int) time(NULL);
-	
+  
 	int value = 5;
 	
 	
@@ -52,9 +51,11 @@ int main()
 	pthread_create (&tid1, &sAttr, runner, &value);
 
 		
-  if (rand_r(&localSeed) % 2 == 0)
+  if (argc > 1)
   {
-    nanosleep( (const struct timespec[]){{0, 500000}}, NULL);
+    // such a small sleep, does not always
+    // prevent race!
+    nanosleep( (const struct timespec[]){{0, 5000}}, NULL);
   }
 
   value += 1;
