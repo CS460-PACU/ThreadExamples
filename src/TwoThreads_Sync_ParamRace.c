@@ -80,8 +80,7 @@ int main(int argc, char **argv)
 /****************************************************************************
  Function:		runner
  
- Description: entry point for the thread.  Sum 1 to *param
-							add the sum calculated to gSum. Use mutex for synchonization
+ Description: entry point for the thread. Print pid, tid, and the param.
  
  Parameters:	pParam - void* that is an int*
  
