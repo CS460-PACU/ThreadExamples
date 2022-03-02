@@ -59,8 +59,8 @@ int main(int argc, char *argv[])
   pthread_t tid[2]; /* the thread identifier */
   pthread_attr_t attr[2]; /* set of attributes for the thread */
   int *pResult;
-  int valueT1 = 9;
-  int valueT2 = 100;
+  int valueT1 = 10000;
+  int valueT2 = 10000;
 
 /* adapted from page 133 of Silberschatz */
   gSum = 0;
