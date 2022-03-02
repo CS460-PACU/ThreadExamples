@@ -14,8 +14,12 @@ all: ${TARGETS}
 bin:
 	mkdir -p bin
 
-bin/OneThread: bin src/OneThread.c
-	gcc -o bin/OneThread -pthread src/OneThread.c -g -Wall
+bin/OneThread: bin bin/OneThread.o
+	gcc -o bin/OneThread -pthread bin/OneThread.o -g -Wall
+
+bin/OneThread.o: src/OneThread.c
+	gcc -o bin/OneThread.o -pthread src/OneThread.c -c -g -Wall
+
 
 bin/TwoThreads_Sync: bin src/TwoThreads_Sync.c
 	gcc -o bin/TwoThreads_Sync -pthread src/TwoThreads_Sync.c -g -Wall
