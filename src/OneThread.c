@@ -45,6 +45,8 @@ int main()
 
 	printf("sum = %d OR %d\n",gSum, *pResult);
 
+  printf("\n&gSum: %p, pResult: %p\n", &gSum, pResult);
+
 	return 0;
 }
 
@@ -63,7 +65,7 @@ int main()
 void *runner(void *pParam) 
 {
 	int localSum = 0;
-	int i, upper = atoi(pParam);
+	int i, upper = *(int*)(pParam);
 
 
 	for (i = 1; i <= upper; i++)
