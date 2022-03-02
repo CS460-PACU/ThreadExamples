@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
   int *pResult;
   int valueT1 = 10000;
   int valueT2 = 10000;
+  int correctSum = (valueT1*(valueT1+1)/2) + (valueT2*(valueT2+1)/2);
 
 /* adapted from page 133 of Silberschatz */
   gSum = 0;
@@ -78,6 +79,8 @@ int main(int argc, char *argv[])
   pthread_join(tid[1], (void**) &pResult); // why a handle?
 
   printf("sum = %d OR %d\n",gSum, *pResult);
+
+  printf("Correct answer: %d\n", correctSum);
 }
 /* adapted from page 133 of Silberschatz */
 
