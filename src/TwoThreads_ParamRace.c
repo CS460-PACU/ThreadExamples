@@ -34,17 +34,11 @@ void *runner(void *pParam);
 int main(int argc, char **argv)
 {
 	pthread_t tid1, tid2; 	// thread ids
-	pthread_attr_t sAttr; 		// thread attributes
-  
 	int value = 5;
-	
-	
-	pthread_attr_init (&sAttr);					// get default thread attributes
-	
-	// create each thread
-	pthread_create (&tid1, &sAttr, runner, &value);
 
-		
+	// create each thread
+	pthread_create (&tid1, NULL, runner, &value);
+
   if (argc > 1)
   {
     // such a small sleep, does not always
@@ -54,16 +48,13 @@ int main(int argc, char **argv)
 
   value += 1;
 
-	pthread_create (&tid2, &sAttr, runner, &value);
+	pthread_create (&tid2, NULL, runner, &value);
 
 	// wait for each thread to finish
 	// don't capture any data from pthread_exit()
 	pthread_join (tid1, NULL);
 	pthread_join (tid2, NULL);
-	
-	// cleanup data
-	pthread_attr_destroy (&sAttr);
-		
+			
 	// no other threads are active, so no mutex is necessary
 	printf("\nDone\n");
 	
