@@ -28,9 +28,9 @@ int gSum; /* this data is shared by the thread(s) */
  
  Returned:		NONE
 ****************************************************************************/
-void *runner(void *param) 
+void *runner(void *pParam) 
 {
-  int i, upper = *(int*) param;
+  int i, upper = *(int*) pParam;
 
   if (upper > 0) 
   {
