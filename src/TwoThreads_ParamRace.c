@@ -73,8 +73,7 @@ int main(int argc, char **argv)
 void *runner(void *pParam) 
 {
 	
-  printf("%d : %ld : %d\n", 
-	  getpid(),
+  printf(" %ld : %d\n", 
 	  //gettid(),
     // libc does NOT provide a library call for gettid()
     // so make a system call directly!
