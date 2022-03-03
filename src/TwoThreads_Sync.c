@@ -88,6 +88,7 @@ void *runner(void *pParam)
 	for (i = 1; i <= *(int*) pParam; i++)
 	{
 
+    // A SLOWER METHOD
   	// lock the mutex before you update shared data!
   	pthread_mutex_lock (&gsMutex);
 	  gSum += i;

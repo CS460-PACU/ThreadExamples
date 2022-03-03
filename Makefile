@@ -8,7 +8,8 @@
 #############################################################################
 
 TARGETS=bin/OneThread bin/TwoThreads_ParamRace bin/TwoThreads_Sync bin/CondWaitThread\
- bin/TwoThreads_NoSharedData bin/TwoThreads_WithSharedData bin/TwoThreads_WithSharedData.asm
+ bin/TwoThreads_NoSharedData bin/TwoThreads_WithSharedData\
+ bin/TwoThreads_WithSharedData.asm bin/TwoThreads_Sync.asm
 
 all: ${TARGETS}
 
@@ -41,6 +42,9 @@ bin/CondWaitThread: src/CondWaitThread.c
 
 bin/TwoThreads_WithSharedData.asm: bin src/TwoThreads_WithSharedData.c
 	gcc -o bin/TwoThreads_WithSharedData.asm -fverbose-asm -S src/TwoThreads_WithSharedData.c
+
+bin/TwoThreads_Sync.asm: bin src/TwoThreads_Sync.c
+	gcc -o bin/TwoThreads_Sync.asm -fverbose-asm -S src/TwoThreads_Sync.c
 
 clean:
 	rm -f ${TARGETS} bin/*
