@@ -53,27 +53,19 @@ int main()
 	
 	ThreadArgs sThreadArg;
 	int tid = syscall(SYS_gettid);
-
 		
 	srand(time(NULL)); 			// seed random number generator
 	
 	sThreadArg.startFlag = 0;
 	sThreadArg.finishedFlag = 0;
-	
-
-
 
 	// create mutex and cond
 	pthread_mutex_init (&sThreadArg.sStartMutex, NULL);
 	pthread_cond_init (&sThreadArg.sStartWaitCond, NULL);
 
-
-
-
 	pthread_mutex_init (&sThreadArg.sFinishedMutex, NULL);
 	pthread_cond_init (&sThreadArg.sFinishedWaitCond, NULL);
 
-	
 	pthread_attr_init (&sAttr);		// get default thread attributes
 	
 	// create each thread
@@ -83,58 +75,31 @@ int main()
 	// sleep for a random amount of time
 	sleep(rand() % 10);
 	
-	
-	
-	
 	// signal the thread to start
 	// lock the mutex to access shared data
 	pthread_mutex_lock(&sThreadArg.sStartMutex);
-	
-	
-	
+
 	// change the condition flag
 	sThreadArg.startFlag = 1;
-	
-	
 	
 	// unlock the mutex so other threads can access the data
 	pthread_mutex_unlock(&sThreadArg.sStartMutex);
 	
-	
-	
-	
 	// signal the waiting thread to check the condition
 	pthread_cond_signal(&sThreadArg.sStartWaitCond);
-
-
-
-
-
-
-
-
-
-
 
 	// many threads can call pthread_cond_signal()
 	// with the same cond variable
 	// only one thread can call pthread_cond_wait()
 	// with the same cond variable
 
-
 	// wait for all threads to finish!
 	fprintf(stderr,"\nmain waiting %d\n\n", tid);
 
-
 	pthread_mutex_lock(&sThreadArg.sFinishedMutex);
-
-
-
 
 	while(sThreadArg.finishedFlag != 2)
 	{
-
-
 
 		pthread_cond_wait(&sThreadArg.sFinishedWaitCond, 
 			&sThreadArg.sFinishedMutex);
@@ -142,27 +107,15 @@ int main()
 		fprintf(stderr,"\nmain wakeup\n\n");
 	}
 
-
-
 	sThreadArg.finishedFlag = 0;
-
-
 
 	pthread_mutex_unlock(&sThreadArg.sFinishedMutex);
 
-
-
 	fprintf(stderr,"\nmain finishing\n\n");
-
-
-
 	
 	// wait for each thread to call pthread_exit()
 	pthread_join (tid1, NULL);
 	pthread_join (tid2, NULL);
-	
-
-
 	
 	// cleanup allocated data
 	pthread_mutex_destroy (&sThreadArg.sStartMutex);
@@ -190,8 +143,6 @@ int main()
 ****************************************************************************/
 void *runnerNoWait(void *pParam) 
 {
-	
-	
 	ThreadArgs *psThreadArg = (ThreadArgs*) pParam;
 
 	unsigned int localSeed = (unsigned int) time(NULL);
@@ -208,27 +159,17 @@ void *runnerNoWait(void *pParam)
 	sleep(rand_r(&localSeed) % 20);
 	
 	
-	
-	
 	// signal main() that psThreadArg->finishedFlag
 	// has changed
 	pthread_mutex_lock(&psThreadArg->sFinishedMutex);
-	
-	
+
 	psThreadArg->finishedFlag ++;
-	
 	
 	pthread_mutex_unlock(&psThreadArg->sFinishedMutex);
 	
-
-	
-	
 	pthread_cond_signal(&psThreadArg->sFinishedWaitCond);
 
-
-
 	fprintf(stderr,"\nThread DONE %d!\n\n", tid);
-
 
 	pthread_exit (NULL);
 }
