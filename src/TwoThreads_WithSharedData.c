@@ -40,7 +40,7 @@ void *runner(void *pParam)
     }
   }
 
-  pthread_exit((void*) &gSum);
+  pthread_exit(NULL);
 }
 
 
@@ -57,8 +57,7 @@ void *runner(void *pParam)
 int main(int argc, char *argv[])
 {
   pthread_t tid[2]; /* the thread identifier */
-  pthread_attr_t attr[2]; /* set of attributes for the thread */
-  int *pResult;
+  pthread_attr_t sAttr[2]; /* set of attributes for the thread */
   int valueT1 = 10000;
   int valueT2 = 10000;
   int correctSum = (valueT1*(valueT1+1)/2) + (valueT2*(valueT2+1)/2);
@@ -67,20 +66,23 @@ int main(int argc, char *argv[])
   gSum = 0;
 
   /* get the default attributes */
-  pthread_attr_init(&attr[0]);
-  pthread_attr_init(&attr[1]);
+  pthread_attr_init(&sAttr[0]);
+  pthread_attr_init(&sAttr[1]);
 
   /* create the thread */
-  pthread_create(&tid[0],&attr[0],runner, &valueT1);
-  pthread_create(&tid[1],&attr[1],runner, &valueT2);
+  pthread_create(&tid[0],&sAttr[0],runner, &valueT1);
+  pthread_create(&tid[1],&sAttr[1],runner, &valueT2);
 
   /* now wait for the thread to exit */
-  pthread_join(tid[0], (void**) &pResult); // why a handle?
-  pthread_join(tid[1], (void**) &pResult); // why a handle?
+  pthread_join(tid[0], NULL); // why a handle?
+  pthread_join(tid[1], NULL); // why a handle?
 
-  printf("sum = %d OR %d\n",gSum, *pResult);
+  printf("sum = %d\n",gSum);
 
   printf("Correct answer: %d\n", correctSum);
+	pthread_attr_destroy (&sAttr[0]);
+	pthread_attr_destroy (&sAttr[1]);
+
 }
 /* adapted from page 133 of Silberschatz */
 

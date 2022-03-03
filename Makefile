@@ -7,7 +7,8 @@
 # Purpose:    
 #############################################################################
 
-TARGETS=bin/OneThread bin/TwoThreads_ParamRace bin/TwoThreads_Sync bin/CondWaitThread bin/TwoThreads_NoSharedData bin/TwoThreads_WithSharedData
+TARGETS=bin/OneThread bin/TwoThreads_ParamRace bin/TwoThreads_Sync bin/CondWaitThread\
+ bin/TwoThreads_NoSharedData bin/TwoThreads_WithSharedData bin/TwoThreads_WithSharedData.asm
 
 all: ${TARGETS}
 
@@ -37,6 +38,9 @@ bin/TwoThreads_WithSharedData: bin src/TwoThreads_WithSharedData.c
 
 bin/CondWaitThread: src/CondWaitThread.c
 	gcc -o bin/CondWaitThread -pthread src/CondWaitThread.c -g -Wall
+
+bin/TwoThreads_WithSharedData.asm: bin src/TwoThreads_WithSharedData.c
+	gcc -o bin/TwoThreads_WithSharedData.asm -fverbose-asm -S src/TwoThreads_WithSharedData.c
 
 clean:
 	rm -f ${TARGETS} bin/*
