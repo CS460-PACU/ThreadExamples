@@ -10,7 +10,9 @@
 TARGETS=bin/OneThread bin/TwoThreads_ParamRace bin/TwoThreads_Sync bin/CondWaitThread\
  bin/TwoThreads_NoSharedData bin/TwoThreads_WithSharedData\
  bin/TwoThreads_WithSharedData_Char bin/TwoThreads_WithSharedData_Int\
- bin/TwoThreads_WithSharedData.asm bin/TwoThreads_Sync.asm
+ bin/TwoThreads_WithSharedData.asm bin/TwoThreads_Sync.asm \
+ bin/TwoThreads_WithSharedData_Int.asm \
+ bin/TwoThreads_WithSharedData_Char.asm 
 
 all: ${TARGETS}
 
@@ -53,6 +55,13 @@ bin/TwoThreads_WithSharedData.asm: bin src/TwoThreads_WithSharedData.c
 
 bin/TwoThreads_Sync.asm: bin src/TwoThreads_Sync.c
 	gcc -o bin/TwoThreads_Sync.asm -fverbose-asm -S src/TwoThreads_Sync.c
+
+bin/TwoThreads_WithSharedData_Char.asm: bin src/TwoThreads_WithSharedData_Char.c
+	gcc -o bin/TwoThreads_WithSharedData_Char.asm -fverbose-asm -S src/TwoThreads_WithSharedData_Char.c
+
+bin/TwoThreads_WithSharedData_Int.asm: bin src/TwoThreads_WithSharedData_Int.c
+	gcc -o bin/TwoThreads_WithSharedData_Int.asm -fverbose-asm -S src/TwoThreads_WithSharedData_Int.c
+
 
 clean:
 	rm -f ${TARGETS} bin/*
