@@ -14,6 +14,8 @@ TARGETS=bin/OneThread bin/TwoThreads_ParamRace bin/TwoThreads_Sync bin/CondWaitT
  bin/TwoThreads_WithSharedData_Int.asm \
  bin/TwoThreads_WithSharedData_Char.asm 
 
+ENSCRIPT_FLAGS=-C -T 2 -p - -M Letter -Ec --color -fCourier8
+
 all: ${TARGETS}
 
 bin:
@@ -65,3 +67,6 @@ bin/TwoThreads_WithSharedData_Int.asm: bin src/TwoThreads_WithSharedData_Int.c
 
 clean:
 	rm -f ${TARGETS} bin/*
+
+printIntExample:
+	enscript ${ENSCRIPT_FLAGS} src/TwoThreads_WithSharedData_Int.c  | ps2pdf - bin/TwoThreads_WithSharedData_Int.pdf
